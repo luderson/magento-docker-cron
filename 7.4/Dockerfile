@@ -1,10 +1,10 @@
-FROM php:7.0-cli
+FROM php:7.4-cli
 
 # Updating and installing some dependences
 # TODO remove suggested packages.
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y \
+    apt-get install --no-install-recommends -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libpng-dev \
@@ -15,16 +15,18 @@ RUN apt-get update && \
     zlib1g-dev \
     libmagickwand-dev \
     libmagickcore-dev \
+    libzip-dev \
+    libsodium-dev \
     cron && \
-    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install \
     bcmath \
-    mcrypt \
     pdo_mysql \
     xsl \
     intl \
     zip \
     soap \
+    sockets \
     gd \
     opcache && \
     apt-get clean -y && \
@@ -34,7 +36,8 @@ RUN apt-get update && \
 
 # Installing pecl PHP modules
 RUN pecl install \
-    imagick-3.4.3 && \
+    imagick-3.4.4 \
+    libsodium && \
     docker-php-ext-enable \
     imagick
 

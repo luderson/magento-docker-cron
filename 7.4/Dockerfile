@@ -13,27 +13,45 @@ RUN apt-get update && \
     libicu-dev \
     libmemcached-dev \
     zlib1g-dev \
+    libzip-dev \
     libmagickwand-dev \
     libmagickcore-dev \
-    libzip-dev \
-    libsodium-dev \
-    cron && \
-    docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    msmtp \
+    git \
+    nano \
+    gnupg \
+    cron \
+    unzip \
+    zip \
+    libwebp-dev \
+    libcurl4-openssl-dev \
+    libonig-dev \
+    libsodium-dev && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
     docker-php-ext-install \
     bcmath \
-    pdo_mysql \
-    xsl \
-    intl \
-    zip \
-    soap \
-    sockets \
+    # # ctype \
+    # curl \
+    # # dom \
     gd \
+    # # hash \
+    # # iconv \
+    intl \
+    # mbstring \
+    # openssl \
+    pdo_mysql \
+    # simplexml \
+    soap \
+    xsl \
+    zip \
+    sockets \
     opcache && \
+    # xmlwriter && \
     apt-get clean -y && \
     apt-get autoclean -y && \
     apt-get autoremove -y && \
     apt-get purge -y --auto-remove
-
+    
 # Installing pecl PHP modules
 RUN pecl install \
     imagick-3.4.4 \
